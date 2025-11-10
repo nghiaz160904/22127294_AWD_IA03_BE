@@ -1,6 +1,6 @@
 package com.busbooking.backend.repository;
 
-import com.busbooking.backend.entity.User;
+import com.busbooking.backend.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

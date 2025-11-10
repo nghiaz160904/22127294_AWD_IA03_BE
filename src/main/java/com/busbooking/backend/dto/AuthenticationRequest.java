@@ -5,15 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class RegisterResponse {
-    private Long id;
+@NoArgsConstructor
+public class AuthenticationRequest {
     private String email;
-    private LocalDateTime createdAt;
-    private String message;
+    private String password;
 }
