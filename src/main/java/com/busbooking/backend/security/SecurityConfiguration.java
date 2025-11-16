@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.http.HttpMethod;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,6 +37,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         // allow unauthenticated access to auth endpoints and static frontend assets
                         .requestMatchers("/api/auth/**").permitAll()
+                        // allow preflight requests
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(
                                 "/",               // root
                                 "/index.html",     // direct index request
@@ -61,7 +64,12 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(allowedOrigins));
+        // prefer explicit allowedOrigins from properties if provided, otherwise allow origin patterns (wildcards)
+        if (allowedOrigins != null && allowedOrigins.length > 0) {
+            configuration.setAllowedOrigins(Arrays.asList(allowedOrigins));
+        } else {
+            configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+        }
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
