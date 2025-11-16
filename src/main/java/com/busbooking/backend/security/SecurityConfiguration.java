@@ -34,7 +34,19 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
+                        // allow unauthenticated access to auth endpoints and static frontend assets
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(
+                                "/",               // root
+                                "/index.html",     // direct index request
+                                "/favicon.ico",
+                                "/manifest.json",
+                                "/static/**",
+                                "/assets/**",
+                                "/**/*.js",
+                                "/**/*.css",
+                                "/**/*.map"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
