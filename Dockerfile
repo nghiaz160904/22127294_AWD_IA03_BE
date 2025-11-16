@@ -3,7 +3,7 @@ FROM maven:3.8-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
-RUN mvn -B clean package -DskipTests
+RUN mvn -B clean package -Dmaven.test.skip=true
 
 # Stage 2: runtime
 FROM eclipse-temurin:17-jre-focal
