@@ -47,10 +47,7 @@ public class SecurityConfiguration {
                                 "/favicon.ico",
                                 "/manifest.json",
                                 "/static/**",
-                                "/assets/**",
-                                "/**/*.js",
-                                "/**/*.css",
-                                "/**/*.map"
+                                "/assets/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
