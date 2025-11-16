@@ -37,6 +37,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         // allow unauthenticated access to auth endpoints and static frontend assets
                         .requestMatchers("/api/auth/**").permitAll()
+                        // always allow access to /error so error handling can work without requiring auth
+                        .requestMatchers("/error", "/error/**").permitAll()
                         // allow preflight requests
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(
